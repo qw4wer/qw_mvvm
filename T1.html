@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>T1</title>
+</head>
+<script type="text/javascript">
+
+    //访问器测试
+    var obj = {};
+    obj.x = 10;
+    obj.y = 20;
+
+
+
+    (function () {
+        var values = {};
+
+        for (var i in obj) {
+            values[i] = obj[i];
+
+            (function (ii) {
+                Object.defineProperty(obj, ii, {
+
+                    get: function () {
+                        console.log("get\t" + ii);
+                        return values[ii];
+                    },
+                    set: function (newValue) {
+
+                        if (values[ii] == newValue)
+                            return;
+                        console.log("set\t" + ii);
+                        values[ii] = newValue;
+                        this[ii] = newValue;
+                    }
+                });
+            })(i);
+
+
+        }
+
+
+    })();
+
+    function test() {
+        console.log("test");
+        console.log(obj.x);
+
+        obj.x += 20;
+
+        console.log(obj.x);
+
+        console.log(obj.y);
+    }
+
+</script>
+<body>
+<button onclick="test()"></button>
+
+
+</body>
+</html>

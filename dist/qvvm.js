@@ -1,3 +1,7 @@
+/*!
+ * built in 2016-7-4:17 by qw4wer
+ * 
+ */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -75,6 +79,8 @@
 
 	    alert(10);
 	}
+
+
 
 	module.exports=test;
 

@@ -12,14 +12,14 @@
     obj.y = 20;
 
 
-
     (function () {
         var values = {};
 
         for (var i in obj) {
-            values[i] = obj[i];
+            values[i] = obj[i]; //缓存值
 
             (function (ii) {
+                // 定义访问器
                 Object.defineProperty(obj, ii, {
 
                     get: function () {
@@ -28,11 +28,11 @@
                     },
                     set: function (newValue) {
 
-                        if (values[ii] == newValue)
+                        if (values[ii] == newValue) //新旧判断
                             return;
                         console.log("set\t" + ii);
-                        values[ii] = newValue;
-                        this[ii] = newValue;
+                        values[ii] = newValue; //修改缓存
+                        this[ii] = newValue; // 更新
                     }
                 });
             })(i);

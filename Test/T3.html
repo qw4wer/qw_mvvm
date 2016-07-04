@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>观测者模式</title>
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var Observer = function (){this.fns= []};
+        Observer.prototype = {
+            subscribe: function (fn) {
+                this.fns.push(fn);
+            },
+            unSubscribe: function (fn) {
+                this.fns = this.fns.filter(function (el) {
+                    if (el !== fn) {
+                        return el;
+                    }
+
+                })
+            },
+            update: function (o, thisObj) {
+                var scope = thisObj || window;
+
+                this.fns.forEach(function (el) {
+                    el.call(scope, o);
+                })
+            }
+
+        }
+
+        var o = new Observer();
+        o.subscribe(function(data){
+            console.log("call1\t" + data);
+        });
+        o.subscribe(f2 =  function(data){
+            console.log("call2\t" + data);
+        });
+
+        o.update("first");
+
+        o.unSubscribe(f2);
+
+        o.update("second");
+
+
+    </script>
+</head>
+<body>
+<button onclick="test()"></button>
+</body>
+</html>

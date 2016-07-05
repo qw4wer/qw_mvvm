@@ -1,5 +1,5 @@
 /*!
- * built in 2016-7-4:17 by qw4wer
+ * built in 2016-7-5:14 by qw4wer
  * 
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -61,11 +61,12 @@
 
 	var subscribe = __webpack_require__(2);
 
-	qvvm = {};
+	qvvm = __webpack_require__(3);
 
-	qvvm.fn = subscribe;
+	qvvm.fn = subscribe.f2;
 
 
+	module.exports = qvvm;
 
 /***/ },
 /* 2 */
@@ -77,12 +78,43 @@
 
 	function test(){
 
-	    alert(10);
+	    console.log(10);
+	}
+
+	function f2(){
+	    console.log('f2')
 	}
 
 
 
-	module.exports=test;
+	module.exports={
+	    test:test,
+	    f2:f2
+	};
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {/**
+	 * Created by qw4wer on 2016/7/4.
+	 */
+
+	function qvvm(el) {
+	    return new qvvm.init(el);
+	}
+
+	global.qvvm = qvvm;
+	if (typeof window !== 'undefined') {
+	    window.qvvm = qvvm;
+	}
+
+	qvvm.init = function (el) {
+	    this[0] = this.element = el;
+	}
+
+	module.exports = qvvm;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }
 /******/ ]);

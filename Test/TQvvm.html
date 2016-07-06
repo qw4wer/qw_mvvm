@@ -5,11 +5,21 @@
     <title>Title</title>
     <script type="text/javascript" src="../dist/qvvm.js"></script>
     <script type="text/javascript">
-        qvvm.fn();
+        var obj = {a: 1, b: 2};
+        obj = qvvm.fn.factory(obj);
+        debugger;
+        console.log(obj.a);
+
+        obj.a += 1;
+
+        console.log(obj.b);
+
+        obj.b += 1;
+
 
     </script>
 </head>
 <body>
-
+<input type="button" id="b"/>
 </body>
 </html>

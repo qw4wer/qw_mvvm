@@ -7,7 +7,6 @@
     <script type="text/javascript">
         var obj = {a: 1, b: 2};
         obj = qvvm.fn.factory(obj);
-        debugger;
         console.log(obj.a);
 
         obj.a += 1;
@@ -20,6 +19,6 @@
     </script>
 </head>
 <body>
-<input type="button" id="b"/>
+<input type="button" id="b" vm-controller="t1" value="{{sss}}"/>
 </body>
 </html>

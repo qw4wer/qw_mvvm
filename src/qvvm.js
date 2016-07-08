@@ -7,7 +7,7 @@
 
 
 require("./core/core");
-qvvm.fn = {};
+
 require("./init/init");
 
 

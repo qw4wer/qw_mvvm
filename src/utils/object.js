@@ -2,23 +2,25 @@
  * Created by qw4wer on 2016/7/6.
  */
 
-var dom = require('./dom');
+var dom = require('./dom/dom');
 
 /**
  * autor: qw4wer
  * time: 2016/7/6 16:28
  * disc : 复制对象
  */
-var copy = function (src, desc, isDeep) {
+var copy = function (src, desc, isDeep, isCover) {
 
     if (typeof src === 'array') {
         desc = desc || [];
         return copyArr(src.desc);
     }
 
-    if (typeof src === 'object') {
+    if (typeof src === 'object' || typeof src === 'function') {
         desc = desc || {};
-        return copyObj(src, desc);
+        if (isCover)
+            return copyCover(src, desc);
+        return copyObj(src, desc, isCover);
     }
     if (dom.isDom(src)) {
         return dom.cloneNode(isDeep);
@@ -49,6 +51,14 @@ var copy = function (src, desc, isDeep) {
             desc[key] = typeof src[key] === 'object' ? copyObj(src[key]) : src[key];
         }
         return desc;
+    }
+
+    function copyCover(src, desc) {
+        src = src || {};
+        desc = desc || {};
+        for (var key in desc) {
+            src[key] = typeof desc[key] === 'object' ? copyObj(desc[key]) : desc[key];
+        }
     }
 }
 

@@ -1,11 +1,19 @@
 /**
- * Created by qw4wer on 2016/7/4.
+ * autor: qw4wer
+ * time: 2016/7/7 10:41
+ * disc : 初始化方法
  */
-
-var object =  require('../utils/object');
+var object = require('../utils/object');
 
 var subscribe = require('../subscribes/subscribe');
 
-qvvm.fn = object.copy(qvvm.fn,subscribe);
+var scan = require("../core/scan");
 
-//Object.defineProperties(qvvm, object.copy(qvvm.fn,subscribe));
+
+qvvm.fn = object.copy(qvvm.fn, subscribe);
+qvvm.fn = object.copy(qvvm.fn, object);
+qvvm.fn = object.copy(qvvm.fn, {scan:scan});
+
+qvvm.prototype = qvvm.init.prototype = qvvm.fn;
+
+//qvvm.prototype = {a:function(){console.log('a')}};

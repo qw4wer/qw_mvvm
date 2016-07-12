@@ -11,16 +11,24 @@ var scan = function (nodes) {
         if (e.nodeType === 1) {
             var id = e.getAttribute(qvvm.flag);
             var vm = qvvm.vmodules[id];
+            if (vm) {
+                vm.$e = e;
+
+            } else if (!$id) {
+                scan(e.childNodes);
+            }
         }
     }
 
 }
 
 
-module.exports = function (a) {
-    if (!a || !a.nodeType)
-        return;
-    return scan([a]);
+module.exports = {
+    sacn: function (a) {
+        if (!a || !a.nodeType)
+            return;
+        return scan([a]);
+    }
 };
 
 

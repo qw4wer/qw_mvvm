@@ -4,6 +4,8 @@
 
 var object = require('../utils/object');
 
+var config = require('./config');
+
 
 function qvvm(el) {
     return new qvvm.init(el);
@@ -23,10 +25,11 @@ qvvm.fn = qvvm.prototype = qvvm.init.prototype
 object.copy(qvvm, {
     fn: {},
     vmodules: [],
-    flag: 'vm-controller'
-
+    flag: 'vm-controller',
+    config: config
 
 }, false, true);
+
 
 
 module.exports = qvvm;

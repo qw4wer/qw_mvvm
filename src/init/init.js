@@ -5,14 +5,30 @@
  */
 var object = require('../utils/object');
 
-var subscribe = require('../subscribes/subscribe');
+var invok = require('../utils/functions/invok');
+
+var subscribe = require('../core/subscribe');
 
 var scan = require("../core/scan");
 
+var define = require("../core/define");
 
-qvvm.fn = object.copy(qvvm.fn, subscribe);
-qvvm.fn = object.copy(qvvm.fn, object);
-qvvm.fn = object.copy(qvvm.fn, {scan:scan});
+var arr = [
+    require('../utils/object'),
+    require('../utils/functions/invok'),
+    require('../core/subscribe'),
+    require("../core/scan"),
+    require("../core/define")
+];
+
+for(var i=0,a;a=arr[i++];){
+    object.copy(qvvm.fn,a,false,true);
+}
+
+//qvvm.fn = object.copy(qvvm.fn, subscribe);
+//qvvm.fn = object.copy(qvvm.fn, object);
+//qvvm.fn = object.copy(qvvm.fn, {scan: scan});
+//qvvm.fn = object.copy(qvvm.fn, {define: define});
 
 qvvm.prototype = qvvm.init.prototype = qvvm.fn;
 

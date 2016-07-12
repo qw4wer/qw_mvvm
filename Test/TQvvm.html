@@ -5,20 +5,23 @@
     <title>Title</title>
     <script type="text/javascript" src="../dist/qvvm.js"></script>
     <script type="text/javascript">
-        var obj = {a: 1, b: 2};
-        obj = qvvm.fn.factory(obj);
-        console.log(obj.a);
 
-        obj.a += 1;
+        window.onload = function () {
+            obj = {$id: 'test', a: 1, b: 2};
+            obj = qvvm.fn.define(obj);
+            console.log(obj.a);
 
-        console.log(obj.b);
+            obj.a += 1;
 
-        obj.b += 1;
+            console.log(obj.b);
 
+            obj.b += 1;
 
+            qvvm.fn.scan(document.getElementById('b'));
+        }
     </script>
 </head>
 <body>
-<input type="button" id="b" vm-controller="t1" value="{{sss}}"/>
+<input type="button" id="b" vm-controller="test" value="{{sss}}"/>
 </body>
 </html>

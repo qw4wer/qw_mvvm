@@ -1,5 +1,5 @@
 /*!
- * built in 2016-7-8:15 by qw4wer
+ * built in 2016-7-12:10 by qw4wer
  * 
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -65,7 +65,7 @@
 
 	__webpack_require__(2);
 
-	__webpack_require__(5);
+	__webpack_require__(6);
 
 
 
@@ -81,6 +81,8 @@
 	 */
 
 	var object = __webpack_require__(3);
+
+	var config = __webpack_require__(5);
 
 
 	function qvvm(el) {
@@ -101,10 +103,11 @@
 	object.copy(qvvm, {
 	    fn: {},
 	    vmodules: [],
-	    flag: 'vm-controller'
-
+	    flag: 'vm-controller',
+	    config: config
 
 	}, false, true);
+
 
 
 	module.exports = qvvm;
@@ -207,6 +210,25 @@
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	/**
+	 * autor: qw4wer
+	 * time: 2016/7/11 10:19
+	 * disc :配置信息
+	 */
+
+
+	var config = {
+	    debug: true
+
+	};
+
+	module.exports = config;
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -216,21 +238,37 @@
 	 */
 	var object = __webpack_require__(3);
 
-	var subscribe = __webpack_require__(6);
+	var invok = __webpack_require__(10);
 
-	var scan = __webpack_require__(7);
+	var subscribe = __webpack_require__(7);
 
+	var scan = __webpack_require__(8);
 
-	qvvm.fn = object.copy(qvvm.fn, subscribe);
-	qvvm.fn = object.copy(qvvm.fn, object);
-	qvvm.fn = object.copy(qvvm.fn, {scan:scan});
+	var define = __webpack_require__(9);
+
+	var arr = [
+	    __webpack_require__(3),
+	    __webpack_require__(10),
+	    __webpack_require__(7),
+	    __webpack_require__(8),
+	    __webpack_require__(9)
+	];
+
+	for(var i=0,a;a=arr[i++];){
+	    object.copy(qvvm.fn,a,false,true);
+	}
+
+	//qvvm.fn = object.copy(qvvm.fn, subscribe);
+	//qvvm.fn = object.copy(qvvm.fn, object);
+	//qvvm.fn = object.copy(qvvm.fn, {scan: scan});
+	//qvvm.fn = object.copy(qvvm.fn, {define: define});
 
 	qvvm.prototype = qvvm.init.prototype = qvvm.fn;
 
 	//qvvm.prototype = {a:function(){console.log('a')}};
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/**
@@ -293,7 +331,7 @@
 	};
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	/**
@@ -309,19 +347,73 @@
 	        if (e.nodeType === 1) {
 	            var id = e.getAttribute(qvvm.flag);
 	            var vm = qvvm.vmodules[id];
+	            if (vm) {
+	                vm.$e = e;
+
+	            } else if (!$id) {
+	                scan(e.childNodes);
+	            }
 	        }
 	    }
 
 	}
 
 
-	module.exports = function (a) {
-	    if (!a || !a.nodeType)
-	        return;
-	    return scan([a]);
+	module.exports = {
+	    sacn: function (a) {
+	        if (!a || !a.nodeType)
+	            return;
+	        return scan([a]);
+	    }
 	};
 
 
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	/**
+	 * autor: qw4wer
+	 * time: 2016/7/8 17:41
+	 * disc :
+	 */
+
+	var define = function (definition) {
+	    var $id = definition.$id;
+
+	    if (qvvm.vmodules[$id]) {
+	        return;
+	    }
+
+	    var vm = qvvm.fn.factory(definition);
+	    return qvvm.vmodules[$id] = vm;
+
+	}
+
+	module.exports = {define: define};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by qw4wer on 2016/7/12.
+	 */
+
+
+	var noop = function () {
+	};
+	var invok = function (list, fn) {
+	    fn.apply(noop, list);
+	}
+
+
+	module.exports = {
+	    noop: noop,
+	    invok: invok
+	};
 
 
 /***/ }

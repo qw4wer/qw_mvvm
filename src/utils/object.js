@@ -62,5 +62,18 @@ var copy = function (src, desc, isDeep, isCover) {
     }
 }
 
-module.exports = {copy: copy};
+
+var hideProperty = function (obj, name, value) {
+    Object.defineProperty(obj, name, {
+        value: value,
+        writable: true,
+        enumerable: false,
+        configurable: true
+    });
+}
+
+module.exports = {
+    copy: copy,
+    hideProperty: hideProperty,
+};
 

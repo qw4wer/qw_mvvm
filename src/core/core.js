@@ -2,9 +2,6 @@
  * Created by qw4wer on 2016/7/6.
  */
 
-var object = require('../utils/object');
-
-var config = require('./config');
 
 
 function qvvm(el) {
@@ -22,14 +19,29 @@ qvvm.init = function (el) {
 
 qvvm.fn = qvvm.prototype = qvvm.init.prototype
 
-object.copy(qvvm, {
+qvvm.extend = function (srcObj, extendObj) {
+    for (var property in  extendObj) {
+        srcObj[property] = extendObj[property];
+    }
+    return srcObj;
+}
+
+qvvm.extend(qvvm, {
     fn: {},
     vmodules: [],
     flag: 'vm-controller',
-    config: config
+    arr2Obj: function (arr) {
+        var obj = {};
+        if (typeof arr != "arr") {
+            for (var i = 0, n = arr.length; i < n; i++) {
+                obj[arr[i]] = true;
+            }
+        }
+        return obj;
+    }
 
-}, false, true);
 
+});
 
 
 module.exports = qvvm;

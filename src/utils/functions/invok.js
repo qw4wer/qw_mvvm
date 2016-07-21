@@ -5,12 +5,12 @@
 
 var noop = function () {
 };
-var invok = function (list, fn) {
+var invokFn = function (list, fn) {
     fn.apply(noop, list);
 }
 
 
 module.exports = {
     noop: noop,
-    invok: invok
+    invokFn: invokFn
 };

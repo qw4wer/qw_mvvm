@@ -1,6 +1,11 @@
 /**
- * Created by qw4wer on 2016/7/4.
+ * 跳过的属性
+ * @type {*[]}
  */
+var skipAttribute = [
+    '$id'
+];
+
 /**
  * autor: qw4wer
  * time: 2016/7/6 11:41
@@ -14,10 +19,10 @@ function Observer() {
  * time: 2016/7/6 11:37
  * disc : 生成访问器
  */
-function makeAccessor() {
+function makeAccessor(depend) {
     var old = NaN;
 
-    return {
+    var accessor = {
         get: function () {
             return old;
         },
@@ -25,33 +30,52 @@ function makeAccessor() {
             if (val === old) {
                 return;
             }
+
+            for(var i= 0,length=depend.length;i<length;i++){
+                depend[i].apply("",[depend.dom,val]);
+            }
             old = val;
 
         },
         enumerable: true,
         configurable: true
-    }
+    };
+
+    Object.defineProperty(accessor.get, 'depend', {
+        value: depend,
+        writable: true,
+        enumerable: true,
+        configurable: true
+    });
+
+    return accessor;
 }
 /**
  * autor: qw4wer
  * time: 2016/7/6 11:33
  * disc : 工厂方法
  */
-function factory(definition) {
-    var key, accesses = [];
+function factory(definition, depend) {
+    var key, accesses = {};
+    depend = depend || [];
     for (key in definition) {
-        accesses[key] = makeAccessor();
+        if (skipAttribute[key])
+            continue;
+        accesses[key] = makeAccessor(depend);
     }
     var $vmodel = new Observer();
 
     Object.defineProperties($vmodel, accesses);
 
-    for(key in definition){
-        $vmodel[key]=definition[key];
+    for (key in definition) {
+        $vmodel[key] = definition[key];
     }
+    qvvm.hideProperty($vmodel, "$accesses", accesses);
 
     return $vmodel;
 }
+
+
 module.exports = {
     makeAccessor: makeAccessor,
     factory: factory

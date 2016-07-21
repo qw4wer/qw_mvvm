@@ -11,7 +11,7 @@ var define = function (definition) {
         return;
     }
 
-    var vm = qvvm.fn.factory(definition);
+    var vm = qvvm.factory(definition);
     return qvvm.vmodules[$id] = vm;
 
 }

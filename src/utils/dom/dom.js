@@ -2,9 +2,8 @@
  * Created by qw4wer on 2016/7/6.
  */
 /**
- * autor: qw4wer
- * time: 2016/7/6 17:43
- * disc : 判断是否为dom对象
+ * 判断是否为dom对象
+ * @type {Function}
  */
 var isDom = ( typeof HTMLElement === 'object' ) ?
     function (obj) {
